@@ -3,24 +3,24 @@
 //if(preg_match('/.*\/' . basename(__FILE__) . '$/', $_SERVER['DOCUMENT_URI']))header('Location: ./index.php');
 if(basename($_SERVER['DOCUMENT_URI']) == basename(__FILE__))
     header('Location: ./index.php');
-
+session_start();
 //Путь к домашнему каталогу
-$homeDir = $_SERVER['PWD'] . "/Homework_PHP_6";
+$homeDir = $_SERVER['DOCUMENT_ROOT'] . "/Homework_PHP_6";
 //Путь к рабочему каталогу
-$workDir = getWorkDir($_REQUEST['dd'] ?? $homeDir);
-
+$workDir = getWorkDir($_SESSION['workDir'] ?? $homeDir);
+$_SESSION['workDir'] = $workDir;
 //Создание нового каталога
 if(isset($_REQUEST['createDir'])) {
-    createNewDir($_REQUEST['dd'], $_REQUEST['newDirName']);
+    createNewDir($_SESSION['workDir'], $_REQUEST['newDirName']);
 }
 //Создание нового файла
 elseif(isset($_REQUEST['createFile'])) {
-    $newFileName = $_REQUEST['dd'] . "/" . $_REQUEST['newFileName'];
+    $newFileName = $_SESSION['workDir'] . "/" . $_REQUEST['newFileName'];
     createNewFile($newFileName);
 }
 //Переименование папки или файла
 elseif(isset($_REQUEST['renameDir'])) {
-    renameElement($_REQUEST['selectFile'][0], $_REQUEST['dd'] . '/' . $_REQUEST['newNameRenameDir']);
+    renameElement($_REQUEST['selectFile'][0], $_SESSION['workDir'] . '/' . $_REQUEST['newNameRenameDir']);
 }
 
 //Удаление папки или файла
@@ -90,7 +90,7 @@ function getWorkDir($oldWorkDir){
 }
 
 // --- Проверка имени нового элемента ---
-function checkElementName($name, $folder = false){
+function checkElementName($name, $folder = false){ //todo не реализовано
 
     return true;
 }
