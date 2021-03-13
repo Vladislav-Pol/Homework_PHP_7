@@ -3,12 +3,26 @@
 //if(preg_match('/.*\/' . basename(__FILE__) . '$/', $_SERVER['DOCUMENT_URI']))header('Location: ./index.php');
 if(basename($_SERVER['DOCUMENT_URI']) == basename(__FILE__))
     header('Location: ./index.php');
-session_start();
-//Путь к домашнему каталогу
-$homeDir = $_SERVER['DOCUMENT_ROOT'] . "/Homework_PHP_6";
-//Путь к рабочему каталогу
-$workDir = getWorkDir($_SESSION['workDir'] ?? $homeDir);
-$_SESSION['workDir'] = $workDir;
+
+//Путь от корня диска до корня сайта
+$rootPath = $_SERVER['DOCUMENT_ROOT'];
+//Рабочий каталог от корня сайта
+$path = cleanPath($_REQUEST['path']?? "");
+$fullPath = $rootPath . $path;
+
+
+//Удаление папки или файла
+if(isset($_REQUEST['del'])){
+    deleteElement($fullPath . $_REQUEST['del']);
+}
+
+
+//Читает содержимое папки
+$dirContent = (scandir(realpath($fullPath)));
+
+
+
+
 //Создание нового каталога
 if(isset($_REQUEST['createDir'])) {
     createNewDir($_SESSION['workDir'], $_REQUEST['newDirName']);
@@ -22,14 +36,6 @@ elseif(isset($_REQUEST['createFile'])) {
 elseif(isset($_REQUEST['renameDir'])) {
     renameElement($_REQUEST['selectFile'][0], $_SESSION['workDir'] . '/' . $_REQUEST['newNameRenameDir']);
 }
-
-//Удаление папки или файла
-elseif(isset($_REQUEST['deleteDir'])) {
-    deleteElement($_REQUEST['selectFile'][0]);
-}
-
-//Читает содержимое папки
-$dirContent = (scandir($workDir));
 
 //---------- Функции ----------
 
@@ -74,13 +80,17 @@ function deleteElement($element){
         }
 }
 
+// --- Обрезка лишних символов в пути ---
+function cleanPath($path = ""){
+    $preg = '/\/[^\/.]*\/\.{2}$|\/.$|^\/..$/';
+    $path = preg_replace($preg, "", $path);
+    return $path;
+}
+
 // --- Получить адрес рабочего каталога ---
 function getWorkDir($oldWorkDir){
     $newWorkDir = $oldWorkDir;
-    if(isset($_REQUEST['home']))
-        $newWorkDir = $GLOBALS['homeDir'];
-
-    elseif(isset($_REQUEST['open']) && isset($_REQUEST['selectFile'])) {
+    if(isset($_REQUEST['open']) && isset($_REQUEST['selectFile'])) {
         $preg = '/(.*[^.]{2}$)|(.+)\/[^\/.]*\/\.{2}$|(.+)\/\.{1,2}/';
         preg_match_all($preg, $_REQUEST['selectFile'][0], $arPregResult, PREG_SET_ORDER);
         $newWorkDir = array_pop($arPregResult[0]);
