@@ -5,7 +5,7 @@ if(basename($_SERVER['DOCUMENT_URI']) == basename(__FILE__))
     header('Location: ./index.php');
 session_start();
 //Путь к домашнему каталогу
-$homeDir = $_SERVER['DOCUMENT_ROOT'] . "/Homework_PHP_6";
+$homeDir = $_SERVER['DOCUMENT_ROOT'];
 //Путь к рабочему каталогу
 $workDir = getWorkDir($_SESSION['workDir'] ?? $homeDir);
 $_SESSION['workDir'] = $workDir;
