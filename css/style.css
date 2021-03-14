@@ -8,7 +8,7 @@ a{
     text-decoration: none;
     color: inherit;
 }
-a:hover{
+a.transform:hover{
     transform: scale(1.1) translate(0, -2px);
 }
 button, .button{
@@ -17,6 +17,7 @@ button, .button{
     border: 3px solid #413c4a;
     padding: 5px;
     font-size: 1em;
+    display: inline-block;
 }
 button:hover, .button:hover{
     background: #413c4a;
@@ -37,7 +38,7 @@ button:hover, .button:hover{
     padding: 10px 30px;
     border-radius: 0 0 8px 8px;
 }
-.fileMen{
+.fileMen, .creat_edit, .uploadFile{
     padding: 30px 30px 5px;
 }
 .functions{
@@ -51,6 +52,9 @@ button:hover, .button:hover{
 .main .elementList{
    width: 100%;
 }
+.main .elementList tbody tr:nth-child(2n){
+    background-color: #f1f1f1;
+}
 .main .elementList td{
     position: relative;
 }
@@ -61,11 +65,11 @@ button:hover, .button:hover{
     width: 50%;
     margin-right: 5px;
 }
-.main .elementList td.element a{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
+/*.main .elementList td.element a{*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*}*/
 .main .elementList td img{
     height: 1em;
 }
@@ -80,4 +84,11 @@ button:hover, .button:hover{
 }
 .display_none{
     display: none;
+}
+
+#creat_edit textarea{
+    width: 100%;
+    height: 90vh;
+    resize: none;
+    white-space: nowrap;
 }
