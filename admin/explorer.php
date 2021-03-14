@@ -4,6 +4,9 @@
 if(basename($_SERVER['DOCUMENT_URI']) == basename(__FILE__))
     header('Location: ./index.php');
 
+//Путь к корню сайта
+$siteDir = "/Homework_PHP_6";
+
 //Путь от корня диска до корня сайта
 $rootPath = $_SERVER['DOCUMENT_ROOT'];
 //Рабочий каталог от корня сайта
@@ -47,7 +50,7 @@ if(isset($_REQUEST['saveElement'])) {
     if($_REQUEST['extension'] == 'folder')
         renameFolder($fullPath . "/" . $_REQUEST['oldName'], $fullPath . "/" . $_REQUEST['fileName']);
     else
-        editFile($fullPath, $_REQUEST['oldName'] . $_REQUEST['oldFileExtention'], $_REQUEST['fileName'] . $_REQUEST['extension'], $_REQUEST['fileContent'] ?? "");
+        editFile($fullPath, $_REQUEST['oldName'] . $_REQUEST['oldFileExtension'], $_REQUEST['fileName'] . $_REQUEST['extension'], $_REQUEST['fileContent'] ?? "");
 }
 
 //Удаление папки или файла
@@ -86,8 +89,9 @@ function renameFolder($oldElementName, $newElementName){
 
 // --- Изменение элемента ---
 function editFile($fullPath, $oldName, $newName, $fileContent){
-    if($oldName != $newName)
+    if($oldName != $newName){
         rename($fullPath . "/" . $oldName, $fullPath . "/" . $newName);
+    }
 
     file_put_contents($fullPath . "/" . $newName, $fileContent);
 }
@@ -200,4 +204,3 @@ function getAvailableName($name){
 
     return $name;
 }
-
