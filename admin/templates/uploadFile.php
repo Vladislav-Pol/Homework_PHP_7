@@ -8,7 +8,7 @@ if(!isset($_REQUEST['path']))
     </div>
     <div class="main content">
         <span><?=$path;?></span><br/><br/>
-        <form method="POST" action="/Homework_PHP_6/admin/index.php" enctype="multipart/form-data" class="uploadForm">
+        <form method="POST" action="<?=$siteDir?>/admin/index.php" enctype="multipart/form-data" class="uploadForm">
             <input type="text" name="path" value="<?=$path?>" hidden>
             <p>Выберите файл для загрузки</p>
             <input type="file" name="uploadFiles[]" multiple>

@@ -11,38 +11,38 @@
     <span><?=$path;?></span><br/><br/>
     <table class="elementList">
         <tbody>
-            <? foreach ($dirContent as $key => $item):
-                if($key < 1) continue;?>
+            <? foreach ($dirContent as $key => $item):?>
+                <?if($item == ".") continue;?>
                 <tr>
                     <td class="actions">
                        <?if($item != ".."):?>
-                        <a href="./?path=<?="$path&del=/$item"?>"><img src="/Homework_PHP_6/img/delete.png" alt="delete"></a>
+                        <a href="./?path=<?="$path&del=$item"?>"><img src="<?=$siteDir?>/img/delete.png" alt="delete"></a>
                         <?endif;?>
-                        <?if(canEdit($fullPath . "/" .$item)):?>
-                            <a href="./?path=<?="$path&edit=$item"?>"><img src="/Homework_PHP_6/img/edit.png" alt="edit"></a>
+                        <?if(canEdit($fullPath . $item)):?>
+                            <a href="./?path=<?="$path&edit=$item"?>"><img src="<?=$siteDir?>/img/edit.png" alt="edit"></a>
                         <?endif;?>
                     </td>
                     <td class="element">
-                        <?if(is_dir($fullPath . "/" .$item)):?>
+                        <?if(is_dir($fullPath . $item)):?>
                         <a href="./?path=<?=cleanPath($path . "/" . $item)?>">
-                            <img src="/Homework_PHP_6/img/folder.png" alt="folder">
+                            <img src="<?=$siteDir?>/img/folder.png" alt="folder">
                             <?= $item ?>
                         </a>
                         <?else:?>
                         <p>
-                            <img src="/Homework_PHP_6/img/file.png" alt="file">
+                            <img src="<?=$siteDir?>/img/file.png" alt="file">
                             <?= $item ?>
                         </p>
                         <?endif;?>
                     </td>
                     <td>
                         <div class="size">
-                            <div><?=getFileSize($fullPath . "/" .$item)?></div>
+                            <div><?=getFileSize($fullPath . $item)?></div>
                         </div>
                     </td>
                     <td>
                         <div class="date">
-                            <div><?=getFileDate($fullPath . "/" .$item)?></div>
+                            <div><?=getFileDate($fullPath . $item)?></div>
                         </div>
                     </td>
                </tr>

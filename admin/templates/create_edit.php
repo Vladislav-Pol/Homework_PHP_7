@@ -2,35 +2,35 @@
 if(!isset($_REQUEST['path']))
     header('Location: ./index.php');
 ?>
-<script src="/Homework_PHP_6/js/adminScripts.js"></script>
+<script src="<?=$siteDir?>/js/adminScripts.js"></script>
 <div class="creat_edit content">
-    <?if(isset($_REQUEST['create'])):?>
+    <?if($create):?>
         <h2>Создание нового элемента</h2>
-    <?elseif(isset($_REQUEST['edit'])):?>
+    <?elseif($edit):?>
         <h2>Редактирование элемента</h2>
     <?else: return;?>
     <?endif;?>
     <div class="functions">
         <a href="./?path=<?=$path?>" class="button">Отмена</a>
-        <button name="<?=isset($_REQUEST['create'])?"saveNewElement":"saveElement"?>" form="creat_edit">Сохранить</button>
+        <button name="<?=$create ? "saveNewElement" : "saveElement"?>" form="creat_edit">Сохранить</button>
     </div>
 
 </div>
 <div class="main content">
     <span><?=$path;?></span><br/><br/>
-    <form method="post" action="/Homework_PHP_6/admin/index.php" id="creat_edit">
+    <form method="post" action="<?=$siteDir?>/admin/index.php" id="creat_edit">
         <input type="text" name="path" value="<?=$path?>" hidden>
-        <input type="text" name="oldName" value="<?=$fileName??''?>" hidden>
+        <input type="text" name="oldName" value="<?=$edit??''?>" hidden>
         <input type="text" name="oldFileExtension" value="<?=$fileType??''?>" hidden>
         <p>Введите имя и выберите тип элемнта</p>
-        <input type="text" name="fileName" value="<?=$fileName??''?>">
+        <input type="text" name="fileName" value="<?=$edit??''?>">
         <select name="extension" id="selectType" onchange="HideTextArea(this.value)">
             <?foreach (FILE_TYPE as $type => $typeName):?>
             <option value="<?= $type?>"
                 <? if(isset($fileType) && $type == $fileType){
                     echo " selected";
                 }
-                elseif(isset($_REQUEST['edit'])){
+                elseif($edit){
                     echo " hidden";
                 }?>
             >

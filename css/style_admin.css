@@ -92,3 +92,6 @@ button:hover, .button:hover{
     resize: none;
     white-space: nowrap;
 }
+.auth .button {
+    margin: 10px 0;
+}
